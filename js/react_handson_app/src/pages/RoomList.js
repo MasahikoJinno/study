@@ -11,6 +11,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import 'firebase/firestore';
 import * as firebase from 'firebase';
 import Loading from '../Loading';
+import '../MaterialIcons.css'
 
 class RoomList extends Component {
   static propTypes = {
@@ -58,6 +59,10 @@ class RoomList extends Component {
     const { rooms } = this.state;
     const isRoomsLoaded = Array.isArray(rooms);
 
+    const iconStyles = {
+      marginRight: 24,
+    };
+
     let contents;
     if (!isRoomsLoaded) {
       contents = <Loading />;
@@ -75,7 +80,7 @@ class RoomList extends Component {
               key={`room-${room.id}`}
               primaryText={room.name}
               rightIcon={
-                <FontIcon className="material-icons">chevron_right</FontIcon>
+                <FontIcon className="material-icons" style={iconStyles}>chevron_right</FontIcon>
               }
               onClick={() => {
                 this.props.history.push(`/room/${room.id}`);
