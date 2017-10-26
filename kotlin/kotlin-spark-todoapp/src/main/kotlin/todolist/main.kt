@@ -6,12 +6,8 @@ import spark.Spark.get
 
 fun main(args: Array<String>) {
     val objectMapper = ObjectMapper().registerKotlinModule()
-    get("/tasks", { req, res ->
-        listOf(
-                Task(1, "Test todo 1", false),
-                Task(2, "Test todo 2", true)
-        )
-    }, { model ->
-        objectMapper.writeValueAsString(model)
-    })
+    val jsonTransformer = JsonTransformer(objectMapper)
+    val taskController = TaskController()
+
+    get("/tasks", taskController.index(), jsonTransformer)
 }
