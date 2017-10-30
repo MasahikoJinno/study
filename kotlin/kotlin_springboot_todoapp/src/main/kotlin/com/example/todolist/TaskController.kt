@@ -1,7 +1,10 @@
 package com.example.todolist
 
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -53,4 +56,8 @@ class TaskController(private val taskRepository: TaskRepository) {
         taskRepository.update(newTask)
         return "redirect:/tasks"
     }
+
+    @ExceptionHandler(NotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleNotFoundException(): String = "tasks/not_found"
 }
