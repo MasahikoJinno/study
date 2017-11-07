@@ -1,4 +1,4 @@
-package com.example.kotlin_sprngboot_todoapp_rest
+package com.example.kotlin_springboot_todoapp_rest
 
 import org.junit.Test
 import org.junit.runner.RunWith
