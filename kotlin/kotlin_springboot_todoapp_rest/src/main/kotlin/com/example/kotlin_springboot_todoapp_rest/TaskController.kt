@@ -18,13 +18,14 @@ class TaskController(private val taskRepository: TaskRepository) {
     }
 
     @RequestMapping(value = "/task/create", method = arrayOf(RequestMethod.POST))
-    fun create(@RequestBody task: Task): Task {
-        val task = taskRepository.create(task.content)
-        return task
+    fun create(@RequestBody task: Task): String {
+        taskRepository.create(task.content)
+        return "success"
     }
 
     @RequestMapping(value = "/task/update", method = arrayOf(RequestMethod.PATCH))
-    fun update(): String {
-        return ""
+    fun update(@RequestBody task: Task): String {
+        taskRepository.update(task)
+        return "success"
     }
 }

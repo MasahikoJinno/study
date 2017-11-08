@@ -11,10 +11,8 @@ class JdbcTaskRepository(private val jdbcTemplate: JdbcTemplate) : TaskRepositor
         Task(rs.getLong("id"), rs.getString("content"), rs.getBoolean("done"))
     }
 
-    override fun create(content: String): Task {
+    override fun create(content: String) {
         jdbcTemplate.update("INSERT INTO task(content) VALUES(?)", content)
-        val id: Long = jdbcTemplate.queryForObject("SELECT last_insert_id()")
-        return Task(id, content, false)
     }
 
     override fun update(task: Task) {
