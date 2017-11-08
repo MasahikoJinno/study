@@ -22,6 +22,10 @@ class JdbcTaskRepository(private val jdbcTemplate: JdbcTemplate) : TaskRepositor
                 task.id)
     }
 
+    override fun delete(id: Long) {
+        jdbcTemplate.update("DELETE FROM task  WHERE id = ?", id)
+    }
+
     override fun findAll(): List<Task> =
             jdbcTemplate.query("SELECT id, content, done FROM task", rowMapper)
 
