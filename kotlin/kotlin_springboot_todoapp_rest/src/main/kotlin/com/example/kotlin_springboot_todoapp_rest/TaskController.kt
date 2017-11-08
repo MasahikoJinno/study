@@ -1,24 +1,29 @@
 package com.example.kotlin_springboot_todoapp_rest
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestBody
 
 @RestController
 class TaskController(private val taskRepository: TaskRepository) {
-    @GetMapping("tasks")
-    fun index(): String {
-        return ""
+
+    private val tasks: MutableList<Task> = mutableListOf()
+    private val maxId: Long
+        get() = tasks.map(Task::id).max() ?: 0
+
+    @RequestMapping(value = "/tasks", method = arrayOf(RequestMethod.GET))
+    fun index(): List<Task> {
+        return taskRepository.findAll()
     }
 
-    @PostMapping("task/new")
-    fun create(): String {
-        return ""
+    @RequestMapping(value = "/task/create", method = arrayOf(RequestMethod.POST))
+    fun create(@RequestBody task: Task): Task {
+        val task = taskRepository.create(task.content)
+        return task
     }
 
-    @PatchMapping("task/{id}")
+    @RequestMapping(value = "/task/update", method = arrayOf(RequestMethod.PATCH))
     fun update(): String {
         return ""
     }
