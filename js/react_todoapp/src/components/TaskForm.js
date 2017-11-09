@@ -21,6 +21,20 @@ export default class TaskForm extends Component {
     e.preventDefault();
 
     if (this.state.input) {
+      const method = "POST";
+      const body = JSON.stringify({ id: 0, content: this.state.input, done: false });
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      fetch('/task/create', {method, headers, body}).then((res) => {
+        return res.json();
+      }).then((json) => {
+        this.setState({
+          tasks: json
+        });
+      });
       /**
        * onAddでタスクの追加を通知後、フォームをリセット
        */

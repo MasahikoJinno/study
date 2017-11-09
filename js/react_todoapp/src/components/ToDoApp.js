@@ -5,13 +5,18 @@ import TaskForm from './TaskForm';
 class ToDoApp extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      tasks: [
-        { id:1, content: "Test Task 1", done: false },
-        { id:2, content: "Test Task 2", done: false },
-        { id:3, content: "Test Task 3", done: false }
-      ]
+      tasks: []
     };
+
+    fetch('/tasks').then((res) => {
+      return res.json();
+    }).then((json) => {
+      this.setState({
+        tasks: json
+      });
+    });
 
     this.handleAdd = this.handleAdd.bind(this);
   }
