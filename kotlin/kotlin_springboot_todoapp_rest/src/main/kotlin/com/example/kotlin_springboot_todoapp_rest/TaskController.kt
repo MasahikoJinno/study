@@ -1,14 +1,14 @@
 package com.example.kotlin_springboot_todoapp_rest
 
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.PathVariable
 
 @RestController
 class TaskController(private val taskRepository: TaskRepository) {
-    
+
     @RequestMapping(value = "/tasks", method = arrayOf(RequestMethod.GET))
     fun index(): List<Task> {
         return taskRepository.findAll()
