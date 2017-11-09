@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @RestController
 class TaskController(private val taskRepository: TaskRepository) {
-
-    private val tasks: MutableList<Task> = mutableListOf()
-    private val maxId: Long
-        get() = tasks.map(Task::id).max() ?: 0
-
+    
     @RequestMapping(value = "/tasks", method = arrayOf(RequestMethod.GET))
     fun index(): List<Task> {
         return taskRepository.findAll()
