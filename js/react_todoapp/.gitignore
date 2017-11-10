@@ -27,3 +27,4 @@ yarn-error.log*
 .idea/misc.xml
 .idea/modules.xml
 .idea/react_todoapp.iml
+.idea/watcherTasks.xml
