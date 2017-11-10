@@ -29,17 +29,17 @@ export default class TaskForm extends Component {
       };
 
       fetch('/task/create', {method, headers, body}).then((res) => {
-        return res.json();
-      }).then((json) => {
-        this.setState({
-          tasks: json
-        });
+        return res.text();
+      }).then((text) => {
+        console.log(text);
+        if (text === 'success') {
+          /**
+           * onAddでタスクの追加を通知後、フォームをリセット
+           */
+          this.props.onAdd(this.state.input);
+          this.setState({ input: '' });
+        }
       });
-      /**
-       * onAddでタスクの追加を通知後、フォームをリセット
-       */
-      this.props.onAdd(this.state.input);
-      this.setState({ input: '' });
     }
   }
 

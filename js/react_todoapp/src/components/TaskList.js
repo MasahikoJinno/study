@@ -1,10 +1,13 @@
 import React from 'react';
+import Task from './Task';
 
-const TaskList = ({ tasks }) => {
-  const list = tasks.map((task, index) => {
-    return <li key={'task-' + index}>{task.content}</li>;
+const TaskList = ({ tasks, onToggleDone, onDelete}) => {
+  const taskList = tasks.map((task, index) => {
+    return <li key={ 'task-' + index }>
+      <Task index={index} task={task} onToggleDone={onToggleDone} onDelete={onDelete} />
+    </li>;
   });
-  return <ul>{list}</ul>;
+  return <ul>{taskList}</ul>;
 };
 
 export default TaskList;
