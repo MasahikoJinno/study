@@ -4,7 +4,7 @@ const TaskDeleteButton = ({ index, onDelete }) => {
   return (
     <button
       onClick={
-        (e) => {
+        () => {
           onDelete({ index: index })
         }
       }>
