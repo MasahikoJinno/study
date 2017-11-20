@@ -7,9 +7,13 @@ import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 
 class ToDoAppContainer extends Component {
+  componentDidMount() {
+    this.props.actions.loadData();
+  }
+
   render() {
     const { todoapp, actions } = this.props;
-    actions.onLoad();
+    console.log(this.props);
 
     return (
       <div>
@@ -19,11 +23,16 @@ class ToDoAppContainer extends Component {
           onChangeText={actions.onChangeText}
           onSubmit={actions.onSubmit}
         />
-        <TaskList
-          tasks={todoapp.tasks}
-          onToggleDone={actions.onToggle}
-          onDelete={actions.onDelete}
-        />
+        {(() => {
+          if (todoapp.status === 'LOADED')
+            return (
+              <TaskList
+                tasks={todoapp.tasks}
+                onToggleDone={actions.onToggle}
+                onDelete={actions.onDelete}
+              />
+            );
+        })()}
       </div>
     );
   }

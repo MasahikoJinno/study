@@ -1,26 +1,24 @@
 import * as actionType from '../utils/actionTypes';
+import { getTasks } from '../utils/TaskApiUtils';
 
-export const onSubmit = (e, input) => ({
-  type: actionType.CREATE_TASK,
-  e,
-  input,
-});
+/**
+ * loadData
+ * - APIからデータを取得するAction Creator
+ */
+export function loadData() {
+  /**
+   * 通常はココでActionを返すが、
+   * 関数を返すとredux-thunkが処理してくれる
+   */
+  return (dispatch/*, getState */) => {
+    dispatch({ type: actionType.GET_TASKS });
 
-export const onLoad = () => ({
-  type: actionType.GET_TASKS,
-});
-
-export const onToggleDone = (e) => ({
-  type: actionType.UPDATE_TASK,
-  e,
-});
-
-export const onDeleteClick = (e) => ({
-  type: actionType.DELETE_TASK,
-  e,
-});
-
-export const onChangeText = (e) => ({
-  type: actionType.CHANGE_INPUT_TEXT,
-  e,
-});
+    getTasks((err, data) => {
+      if (err) {
+        dispatch({ type: actionType.ERROR, err: err });
+      } else {
+        dispatch({ type: actionType.GET_TASKS, data: data });
+      }
+    });
+  };
+}
