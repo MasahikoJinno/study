@@ -8,18 +8,11 @@ const initialAppState = {
 
 export default function todoapp(state = initialAppState, action) {
   switch (action.type) {
-    case actionTypes.LOADING:
-      return initialAppState;
-
     case actionTypes.GET_TASKS:
-      console.log(action.data);
-      return {
+      return Object.assign({}, state, {
         status: 'LOADED',
         tasks: action.data
-      };
-
-    case actionTypes.ERROR:
-      return initialAppState;
+      });
 
     default:
       return state;

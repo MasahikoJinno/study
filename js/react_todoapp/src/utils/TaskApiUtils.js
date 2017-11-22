@@ -8,8 +8,28 @@ export function getTasks(callback) {
   });
 }
 
-export function createTask(callback, content) {
+export function createTask(callback, e, input) {
+  // preventDefaultしないとリロードしてしまう
+  e.preventDefault();
 
+  if (input) {
+    const method = "POST";
+    const body = JSON.stringify({ id: 0, content: input, done: false });
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+
+    fetch('/task/create', {method, headers, body}).then((res) => {
+      return res.text();
+    }).then((text) => {
+      if (text === 'success') {
+        callback(null);
+      }
+    }).catch((err) => {
+      callback(err);
+    });
+  }
 }
 
 export function updateTask(callback, task) {

@@ -8,12 +8,13 @@ import TaskList from '../components/TaskList';
 
 class ToDoAppContainer extends Component {
   componentDidMount() {
+    console.log('componentDidMount');
     this.props.actions.loadData();
   }
 
   render() {
     const { todoapp, actions } = this.props;
-    console.log(this.props);
+    console.log(todoapp);
 
     return (
       <div>
@@ -24,7 +25,7 @@ class ToDoAppContainer extends Component {
           onSubmit={actions.onSubmit}
         />
         {(() => {
-          if (todoapp.status === 'LOADED')
+          if (todoapp.status === 'LOADED') {
             return (
               <TaskList
                 tasks={todoapp.tasks}
@@ -32,6 +33,7 @@ class ToDoAppContainer extends Component {
                 onDelete={actions.onDelete}
               />
             );
+          }
         })()}
       </div>
     );
@@ -48,4 +50,7 @@ function mapDispatch(dispatch) {
   }
 }
 
-export default connect(mapState, mapDispatch)(ToDoAppContainer);
+export default connect(
+  mapState,
+  mapDispatch
+)(ToDoAppContainer);
