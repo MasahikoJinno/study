@@ -8,7 +8,7 @@ import {
 
 /**
  * loadData
- * - APIからデータを取得するAction Creator
+ * - ToDoApp APIからデータを取得するAction Creator
  */
 export function loadData() {
   /**
@@ -29,7 +29,7 @@ export function loadData() {
 
 /**
  * onSubmit
- * - APIからデータを取得するAction Creator
+ * - タスクを新規作成するAction Creator
  */
 export function onSubmit(e, input) {
   return (dispatch) => {
@@ -44,8 +44,8 @@ export function onSubmit(e, input) {
 }
 
 /**
- * addTask
- * - APIからデータを取得するAction Creator
+ * onChangeText
+ * - テキストボックスの2WayDataBinding用Action Creator
  */
 export function onChangeText(e) {
   return {
@@ -54,7 +54,10 @@ export function onChangeText(e) {
   }
 }
 
-
+/**
+ * onToggleDone
+ * - タスクの更新用Action Creator
+ */
 export function onToggleDone(index, done) {
   return (dispatch, getState) => {
     const todoapp = getState().todoapp;
@@ -68,6 +71,10 @@ export function onToggleDone(index, done) {
   }
 }
 
+/**
+ * onDelete
+ * - タスクの削除用Action Creator
+ */
 export function onDelete(index) {
   return (dispatch, getState) => {
     const todoapp = getState().todoapp;
