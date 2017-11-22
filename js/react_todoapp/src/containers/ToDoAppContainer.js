@@ -29,7 +29,7 @@ class ToDoAppContainer extends Component {
             return (
               <TaskList
                 tasks={todoapp.tasks}
-                onToggleDone={actions.onToggle}
+                onToggleDone={actions.onToggleDone}
                 onDelete={actions.onDelete}
               />
             );

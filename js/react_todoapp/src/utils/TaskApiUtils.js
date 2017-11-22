@@ -8,7 +8,7 @@ export function getTasks(callback) {
   });
 }
 
-export function createTask(callback, e, input) {
+export function createTask(e, input, callback) {
   // preventDefaultしないとリロードしてしまう
   e.preventDefault();
 
@@ -32,10 +32,51 @@ export function createTask(callback, e, input) {
   }
 }
 
-export function updateTask(callback, task) {
+export function updateTask(oldTasks, checkTaskIndex, checkTaskDone, callback) {
+  const newTasks = oldTasks.map((task, index) => {
+    if (checkTaskIndex === index) {
+      task.done = checkTaskDone;
+    }
+    return task;
+  });
 
+  const updateTask = newTasks[checkTaskIndex];
+
+  const method = "PATCH";
+  const body = JSON.stringify({
+    id: updateTask.id,
+    content: updateTask.content,
+    done: updateTask.done
+  });
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+
+  fetch('/task/update', { method, headers, body }).then((res) => {
+    return res.text();
+  }).then((text) => {
+    if (text === 'success') {
+      callback(null, newTasks);
+    }
+  }).catch((err) => {
+    callback(err);
+  });
 }
 
-export function deleteTask(callback, taskId) {
+export function deleteTask(oldTasks, deleteIndex, callback) {
+  const method = "DELETE";
 
+  fetch(`/task/${oldTasks[deleteIndex].id}`, { method }).then((res) => {
+    return res.text();
+  }).then((text) => {
+    if (text === 'success') {
+      const newTasks = oldTasks.filter((task, index) => {
+        return deleteIndex !== index;
+      });
+      callback(null, newTasks);
+    }
+  }).catch((err) => {
+    callback(err);
+  });
 }
