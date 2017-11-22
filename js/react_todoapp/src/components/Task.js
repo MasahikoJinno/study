@@ -8,12 +8,7 @@ const Task = ({ index, task, onToggleDone, onDelete }) => {
     <input
       type="checkbox"
       checked={task.done}
-      onChange={ (e) => {
-        onToggleDone({
-          index: index,
-          done: e.target.checked,
-        });
-      }}
+      onChange={e => { onToggleDone(index, e.target.checked) }}
     />
     {text}
     <TaskDeleteButton index={index} onDelete={onDelete} />

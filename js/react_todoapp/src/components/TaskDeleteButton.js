@@ -2,12 +2,7 @@ import React from 'react';
 
 const TaskDeleteButton = ({ index, onDelete }) => {
   return (
-    <button
-      onClick={
-        (e) => {
-          onDelete({ index: index })
-        }
-      }>
+    <button onClick={() => { onDelete(index) }}>
       Delete
     </button>
   );
