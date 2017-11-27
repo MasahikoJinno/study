@@ -1,14 +1,10 @@
-export function getTasks(callback) {
-  fetch('/tasks').then((res) => {
+export function getTasks() {
+  return fetch('/tasks').then((res) => {
     return res.json();
-  }).then((json) => {
-    callback(null, json);
-  }).catch((err) => {
-    callback(err);
   });
 }
 
-export function createTask(e, input, callback) {
+export function createTask(e, input) {
   // preventDefaultしないとリロードしてしまう
   e.preventDefault();
 
@@ -20,14 +16,8 @@ export function createTask(e, input, callback) {
       'Content-Type': 'application/json'
     };
 
-    fetch('/task/create', {method, headers, body}).then((res) => {
+    return fetch('/task/create', { method, headers, body }).then((res) => {
       return res.text();
-    }).then((text) => {
-      if (text === 'success') {
-        callback(null);
-      }
-    }).catch((err) => {
-      callback(err);
     });
   }
 }
@@ -53,14 +43,10 @@ export function updateTask(oldTasks, checkTaskIndex, checkTaskDone, callback) {
     'Content-Type': 'application/json'
   };
 
-  fetch('/task/update', { method, headers, body }).then((res) => {
-    return res.text();
-  }).then((text) => {
-    if (text === 'success') {
-      callback(null, newTasks);
+  return fetch('/task/update', { method, headers, body }).then((res) => {
+    if (res.text() === "success") {
+      return newTasks;
     }
-  }).catch((err) => {
-    callback(err);
   });
 }
 

@@ -16,14 +16,13 @@ export function loadData() {
    * 関数を返すとredux-thunkが処理してくれる
    */
   return (dispatch) => {
-    getTasks((err, data) => {
-      if (err) {
-        dispatch({ type: actionType.ERROR, err: err });
-      } else {
-        console.log(data);
+    getTasks()
+      .then(data => {
         dispatch({ type: actionType.GET_TASKS, tasks: data });
-      }
-    });
+      })
+      .catch(err => {
+        dispatch({ type: actionType.ERROR, err: err });
+      });
   };
 }
 
@@ -33,13 +32,15 @@ export function loadData() {
  */
 export function onSubmit(e, input) {
   return (dispatch) => {
-    createTask(e, input, (err) => {
-      if (err) {
+    createTask(e, input)
+      .then(text => {
+        if (text === 'success') {
+          dispatch({ type: actionType.CREATE_TASK, input: input });
+        }
+      })
+      .catch(err => {
         dispatch({ type: actionType.ERROR, err: err });
-      } else {
-        dispatch({ type: actionType.CREATE_TASK, input: input });
-      }
-    });
+      });
   };
 }
 
@@ -61,13 +62,13 @@ export function onChangeText(e) {
 export function onToggleDone(index, done) {
   return (dispatch, getState) => {
     const todoapp = getState().todoapp;
-    updateTask(todoapp.tasks, index, done, (err, newTasks) => {
-      if (err) {
+    updateTask(todoapp.tasks, index, done)
+      .then(data => {
+        dispatch({ type: actionType.UPDATE_TASK, tasks: data });
+      })
+      .catch(err => {
         dispatch({ type: actionType.ERROR, err: err });
-      } else {
-        dispatch({ type: actionType.UPDATE_TASK, tasks: newTasks });
-      }
-    });
+      });
   }
 }
 
