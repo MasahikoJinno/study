@@ -12,7 +12,10 @@ class ToDoAppContainer extends Component {
   }
 
   render() {
-    const { todoapp, actions } = this.props;
+    const {
+      todoapp,
+      actions
+    } = this.props;
 
     return (
       <div>
