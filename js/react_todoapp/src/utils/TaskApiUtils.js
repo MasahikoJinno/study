@@ -22,7 +22,7 @@ export function createTask(e, input) {
   }
 }
 
-export function updateTask(oldTasks, checkTaskIndex, checkTaskDone, callback) {
+export function updateTask(oldTasks, checkTaskIndex, checkTaskDone) {
   const newTasks = oldTasks.map((task, index) => {
     if (checkTaskIndex === index) {
       task.done = checkTaskDone;
