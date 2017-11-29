@@ -44,25 +44,29 @@ export function updateTask(oldTasks, checkTaskIndex, checkTaskDone, callback) {
   };
 
   return fetch('/task/update', { method, headers, body }).then((res) => {
-    if (res.text() === "success") {
-      return newTasks;
+    if (res.status !== 200) {
+      return new Error(res.statusText);
     }
+    return res.text();
+  }).then((text) => {
+    if (text !== 'success') {
+      return new Error(text);
+    }
+    return newTasks;
   });
 }
 
-export function deleteTask(oldTasks, deleteIndex, callback) {
+export function deleteTask(oldTasks, deleteIndex) {
   const method = "DELETE";
 
-  fetch(`/task/${oldTasks[deleteIndex].id}`, { method }).then((res) => {
+  return fetch(`/task/${oldTasks[deleteIndex].id}`, { method }).then((res) => {
     return res.text();
   }).then((text) => {
     if (text === 'success') {
       const newTasks = oldTasks.filter((task, index) => {
         return deleteIndex !== index;
       });
-      callback(null, newTasks);
+      return newTasks;
     }
-  }).catch((err) => {
-    callback(err);
   });
 }

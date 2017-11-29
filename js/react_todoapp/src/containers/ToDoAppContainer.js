@@ -8,13 +8,11 @@ import TaskList from '../components/TaskList';
 
 class ToDoAppContainer extends Component {
   componentDidMount() {
-    console.log('componentDidMount');
     this.props.actions.loadData();
   }
 
   render() {
     const { todoapp, actions } = this.props;
-    console.log(todoapp);
 
     return (
       <div>

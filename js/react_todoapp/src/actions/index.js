@@ -7,6 +7,17 @@ import {
 } from '../utils/TaskApiUtils';
 
 /**
+ * onChangeText
+ * - テキストボックスの2WayDataBinding用Action Creator
+ */
+export function onChangeText(e) {
+  return {
+    type: actionType.CHANGE_INPUT_TEXT,
+    e: e
+  }
+}
+
+/**
  * loadData
  * - ToDoApp APIからデータを取得するAction Creator
  */
@@ -45,17 +56,6 @@ export function onSubmit(e, input) {
 }
 
 /**
- * onChangeText
- * - テキストボックスの2WayDataBinding用Action Creator
- */
-export function onChangeText(e) {
-  return {
-    type: actionType.CHANGE_INPUT_TEXT,
-    e: e
-  }
-}
-
-/**
  * onToggleDone
  * - タスクの更新用Action Creator
  */
@@ -79,12 +79,12 @@ export function onToggleDone(index, done) {
 export function onDelete(index) {
   return (dispatch, getState) => {
     const todoapp = getState().todoapp;
-    deleteTask(todoapp.tasks, index, (err, newTasks) => {
-      if (err) {
+    deleteTask(todoapp.tasks, index)
+      .then(data => {
+        dispatch({ type: actionType.DELETE_TASK, tasks: data });
+      })
+      .catch(err => {
         dispatch({ type: actionType.ERROR, err: err });
-      } else {
-        dispatch({ type: actionType.DELETE_TASK, tasks: newTasks });
-      }
-    });
+      });
   }
 }
