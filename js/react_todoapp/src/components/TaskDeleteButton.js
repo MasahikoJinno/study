@@ -1,11 +1,23 @@
 import React from 'react';
+import { withStyles } from 'material-ui/styles';
 
-const TaskDeleteButton = ({ index, onDelete }) => {
+import Button from 'material-ui/Button';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+const TaskDeleteButton = ({ classes, index, onDelete }) => {
   return (
-    <button onClick={() => { onDelete(index) }}>
+    <Button raised dense className={classes.button} onClick={() => { onDelete(index) }}>
       Delete
-    </button>
+    </Button>
   );
 };
 
-export default TaskDeleteButton;
+export default withStyles(styles)(TaskDeleteButton);

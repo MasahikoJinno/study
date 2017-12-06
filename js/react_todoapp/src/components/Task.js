@@ -1,12 +1,13 @@
 import React from 'react';
 import TaskDeleteButton from './TaskDeleteButton';
 
-const Task = ({ index, task, onToggleDone, onDelete }) => {
+import Switch from 'material-ui/Switch';
+
+const Task = ({ classes, index, task, onToggleDone, onDelete }) => {
   const text = task.done ? <s>{task.content}</s> : task.content;
 
   return <div>
-    <input
-      type="checkbox"
+    <Switch
       checked={task.done}
       onChange={e => { onToggleDone(index, e.target.checked) }}
     />
