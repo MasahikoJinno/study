@@ -1,13 +1,28 @@
 import React from 'react';
+import List, { ListItem } from 'material-ui/List';
+import { withStyles } from 'material-ui/styles';
+
 import Task from './Task';
 
-const TaskList = ({ tasks, onToggleDone, onDelete}) => {
+const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    background: theme.palette.background.paper,
+  },
+});
+
+const TaskList = ({ classes, tasks, onToggleDone, onDelete}) => {
   const taskList = tasks.map((task, index) => {
-    return <li key={'task-' + index}>
-      <Task index={index} task={task} onToggleDone={onToggleDone} onDelete={onDelete} />
-    </li>;
+    return <div className={classes.root}>
+      <List key={'task-' + index}>
+        <ListItem button>
+          <Task index={index} task={task} onToggleDone={onToggleDone} onDelete={onDelete} />
+        </ListItem>
+      </List>
+    </div>;
   });
   return <ul>{taskList}</ul>;
 };
 
-export default TaskList;
+export default withStyles(styles)(TaskList);

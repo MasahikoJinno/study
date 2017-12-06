@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import * as actions from '../actions';
+import AppBar from '../components/SimpleAppBar';
 import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 
@@ -18,8 +20,8 @@ class ToDoAppContainer extends Component {
     } = this.props;
 
     return (
-      <div>
-        <h1>Todo App of Redux</h1>
+      <MuiThemeProvider>
+        <AppBar />
         <TaskForm
           input={todoapp.input}
           onChangeText={actions.onChangeText}
@@ -36,7 +38,7 @@ class ToDoAppContainer extends Component {
             );
           }
         })()}
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
