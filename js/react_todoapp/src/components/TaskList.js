@@ -16,9 +16,12 @@ const TaskList = ({ classes, tasks, onToggleDone, onDelete}) => {
   const taskList = tasks.map((task, index) => {
     return <div className={classes.root}>
       <List key={'task-' + index}>
-        <ListItem button>
-          <Task index={index} task={task} onToggleDone={onToggleDone} onDelete={onDelete} />
-        </ListItem>
+        <Task
+          index={index}
+          task={task}
+          onToggleDone={onToggleDone}
+          onDelete={onDelete}
+        />
       </List>
     </div>;
   });
