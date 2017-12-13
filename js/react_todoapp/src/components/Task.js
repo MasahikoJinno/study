@@ -1,19 +1,25 @@
 import React from 'react';
 import TaskDeleteButton from './TaskDeleteButton';
+import { ListItem, ListItemText } from 'material-ui/List';
 
 import Switch from 'material-ui/Switch';
 
 const Task = ({ classes, index, task, onToggleDone, onDelete }) => {
   const text = task.done ? <s>{task.content}</s> : task.content;
 
-  return <div>
+  return <ListItem button>
     <Switch
       checked={task.done}
       onChange={e => { onToggleDone(index, e.target.checked) }}
     />
-    {text}
-    <TaskDeleteButton index={index} onDelete={onDelete} />
-  </div>;
+    <ListItemText
+      primary={text}
+    />
+    <TaskDeleteButton
+      index={index}
+      onDelete={onDelete}
+    />
+  </ListItem>;
 };
 
 export default Task;
