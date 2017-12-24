@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="manifest" href="/manifest.json">
+    <title>ホーム画面追加デモ</title>
+  </head>
+  <body>
+    <h1>PWA ホーム画面追加デモ</h1>
+    <p>Progressive Web AppsのAdd to homescreen(ホーム画面追加)のデモ</p>
+    <script>
+      window.addEventListener('load', function() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register("/ServiceWorker.js")
+            .then((registration) => {
+              console.log("ServiceWorker registed.");
+            }).catch((error) => {
+              console.warn("ServiceWorker error.", error);
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
