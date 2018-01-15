@@ -7,15 +7,17 @@
   </head>
   <body>
     <h1>PWA ホーム画面追加デモ</h1>
-    <p>ホーム画面追加のサンプルです。</p>
+    <p>Progressive Web AppsのHTMLキャッシュのデモ 2018/01/09 13:50</p>
+    <p><a href="page1.html">HTMLキャッシュサンプルページ</a></p>
+    <p><a href="page2.html">HTMLキャッシュサンプルページ2</a></p>
     <script>
       window.addEventListener('load', () => {
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register("/sw.js")
-            .then(registration => {
+            .then((registration) => {
               console.log("success, scope:", registration.scope);
             }).catch((err) => {
-              console.warn("failed: ", err);
+                console.warn("failed: ", err);
             });
         }
       });
