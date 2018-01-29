@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import logo from './logo.svg';
 import './App.css';
+import config from './api-config';
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   getFriends = (user_id) => {
-    fetch(`https://xdozxabfe6.execute-api.ap-northeast-1.amazonaws.com/test/friends/${user_id}`)
+    fetch(config.getTwitterFriendsUri + user_id)
       .then(res => res.json())
       .then(data => {
         this.setState({
