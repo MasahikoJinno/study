@@ -20,7 +20,9 @@ class App extends Component {
         authStateChecked: true
       });
       const user = firebase.auth().currentUser;
-      this.getFriends(user.providerData[0].uid);
+      //if (user) {
+        this.getFriends(user.providerData[0].uid);
+      //}
     });
   }
 
@@ -42,12 +44,22 @@ class App extends Component {
 
   handleClick = () => {
     const provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(() => {
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      console.log(result);
       this.setState({
         login: true
       });
     }).catch(err => {
       console.log('failed to log in', err);
+    });
+  };
+
+  handleLogout = () => {
+    firebase.auth().signOut().then(() => {
+      console.log('Sign-out successful.');
+    }).catch(error => {
+      console.log('An error happened.');
+      console.log(error)
     });
   };
 
@@ -64,7 +76,7 @@ class App extends Component {
     }
 
     const login = user ? <span>ユーザ名: {user.displayName}</span> : <p><button onClick={this.handleClick}>ログイン</button></p>;
-    console.log('test');
+    const logout = user ? <p><button onClick={this.handleLogout}>ログアウト</button></p> : null;
 
     const friends = this.state.friends.map(friend => {
       return <li key={friend.id}>{friend.name}</li>
@@ -77,6 +89,7 @@ class App extends Component {
           <h1 className="App-title">Firebase Twitter Login</h1>
         </header>
         <p className="App-intro">{login}</p>
+        <p className="App-intro">{logout}</p>
         <ul>{friends}</ul>
       </div>
     );
