@@ -6,30 +6,11 @@ const urlsToCache = [
   '/favicon.ico'
 ];
 
+// Service Workerのインストール
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(urlsToCache);
-    })
-  );
-});
-
-self.addEventListener('activate', event => {
-  // ここで指定したCACHE_NAMEのキャッシュは削除されません
-  // 新しく追加するCACHE_NAMEなどを指定しましょう
-  const cacheWhitelist = [
-    'test-pwa-cache-v33'
-  ];
-
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName); // キャッシュを削除
-          }
-        })
-      );
     })
   );
 });
@@ -41,8 +22,7 @@ self.addEventListener('fetch', event => {
         // キャッシュがあればキャッシュからレスポンスを返す
         return res;
       }
-
-      // -- ここから下が新しく追記する部分です。 --
+      // -- ここから下が新しく追記する部分 --
       // event.requestはStreamなのでcloneする必要がある
       const fetchRequest = event.request.clone();
 
@@ -53,10 +33,8 @@ self.addEventListener('fetch', event => {
         ) {
           return res;
         }
-
         // resはStreamなのでcloneする必要がある
         const responseToCache = res.clone();
-
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseToCache);
         });
@@ -65,3 +43,4 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
