@@ -42,6 +42,9 @@ export function loadData() {
  * - タスクを新規作成するAction Creator
  */
 export function onSubmit(e, input) {
+  // preventDefaultしないとリロードしてしまう
+  e.preventDefault();
+
   return (dispatch) => {
     createTodo(e, input)
       .then(text => {

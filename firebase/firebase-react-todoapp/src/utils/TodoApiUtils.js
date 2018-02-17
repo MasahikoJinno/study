@@ -1,13 +1,12 @@
+import apiConfig from '../config/api-config';
+
 export function getTodos() {
-  return fetch('/tasks').then((res) => {
+  return fetch(apiConfig.endpoint + '/todos').then(res => {
     return res.json();
   });
 }
 
 export function createTodo(e, input) {
-  // preventDefaultしないとリロードしてしまう
-  e.preventDefault();
-
   if (input) {
     const method = "POST";
     const body = JSON.stringify({ id: 0, content: input, done: false });
@@ -16,9 +15,10 @@ export function createTodo(e, input) {
       'Content-Type': 'application/json'
     };
 
-    return fetch('/todo/create', { method, headers, body }).then((res) => {
-      return res.text();
-    });
+    return fetch(apiConfig.endpoint + '/todos/create', { method, headers, body })
+      .then(res => {
+        return res.text();
+      });
   }
 }
 
